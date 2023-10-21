@@ -10,23 +10,23 @@ class MyThemeData {
   static ThemeData liteMode = ThemeData(
       scaffoldBackgroundColor: mint,
 
-      textTheme: TextTheme(
-        bodySmall: GoogleFonts.elMessiri(
-          fontWeight: FontWeight.w400,
-          fontSize: 20,
-          color: Color(0xff242424),
-        ),
-        bodyMedium: GoogleFonts.elMessiri(
-          fontWeight: FontWeight.w700,
-          fontSize: 25,
-          color: Color(0xffFFFFFF),
-        ),
-        bodyLarge: GoogleFonts.elMessiri(
-          fontWeight: FontWeight.bold,
-          fontSize: 30,
-          color: Color(0xff242424),
-        ),
-      ),
+      // textTheme: TextTheme(
+      //   bodySmall: GoogleFonts.elMessiri(
+      //     fontWeight: FontWeight.w400,
+      //     fontSize: 20,
+      //     color: Color(0xff242424),
+      //   ),
+      //   bodyMedium: GoogleFonts.elMessiri(
+      //     fontWeight: FontWeight.w700,
+      //     fontSize: 25,
+      //     color: Color(0xffFFFFFF),
+      //   ),
+      //   bodyLarge: GoogleFonts.elMessiri(
+      //     fontWeight: FontWeight.bold,
+      //     fontSize: 30,
+      //     color: Color(0xff242424),
+      //   ),
+      // ),
       appBarTheme: AppBarTheme(
 
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo/screens/settings/settings.dart';
+import 'package:todo/screens/tasks/addTaskBottom.dart';
+import 'package:todo/screens/tasks/tasks_tab.dart';
 
 class HomeLayout extends StatefulWidget {
 
@@ -10,10 +13,16 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int index=0;
+  List<Widget>tab=[
+
+    TaskTab(),
+    SettingsTab(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         title: Text("ToDo"),
@@ -21,7 +30,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+            showSheet();
         },
 
         child: Icon(Icons.add),
@@ -55,6 +64,21 @@ class _HomeLayoutState extends State<HomeLayout> {
           ],
         ),
       ),
+      body: tab[index],
+    );
+  }
+  void   showSheet(){
+    showModalBottomSheet(context: context,
+        isScrollControlled: true,
+        builder:(context) {
+
+          return Padding(
+            padding:  EdgeInsets.only(
+              bottom:MediaQuery.of(context).viewInsets.bottom
+            ),
+            child: AddTaskBottom(),
+          );
+        },
     );
   }
 }
