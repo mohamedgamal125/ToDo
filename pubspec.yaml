@@ -39,6 +39,13 @@ dependencies:
   calendar_timeline: ^1.1.2
   firebase_core: ^2.19.0
   cloud_firestore: ^4.11.0
+  flutter_slidable: ^3.0.0
+  flutter_native_splash: ^2.3.4
+flutter_native_splash:
+  background_image: "assets/images/splash.png"
+  android_12:
+    image: assets/images/splash.png
+
 
 dev_dependencies:
   flutter_test:
@@ -54,8 +61,10 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter packages.
+# The following section is specific to Flutter packages
 flutter:
+  assets:
+    - assets/images/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

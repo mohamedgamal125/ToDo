@@ -1,33 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo/layout/homeLayout.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/shared/firebase/firebase_functions.dart';
 import 'package:todo/shared/style/colors.dart';
 
-class AddTaskBottom extends StatefulWidget {
+class EditTask extends StatefulWidget {
+  const EditTask({Key? key}) : super(key: key);
+  static const String routeName="EditTask";
+
   @override
-  State<AddTaskBottom> createState() => _AddTaskBottomState();
+  State<EditTask> createState() => _EditTaskState();
 }
 
-class _AddTaskBottomState extends State<AddTaskBottom> {
+class _EditTaskState extends State<EditTask> {
+
+
   var titleController = TextEditingController();
 
   var descriptionController = TextEditingController();
 
   var selectedDate=DateTime.now();
+  var formKey1=GlobalKey<FormState>();
 
-  var formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Form(
-        key:formKey ,
+    var args = ModalRoute.of(context)?.settings.arguments as TaskModel;
+    titleController.text=args.title;
+    descriptionController.text=args.description;
+    // print("============================================================\n");
+    // print("${args.id}\n${args.title}\n${args.description}\n${args.date}\n${args.isDone}");
+    return Scaffold(
+      extendBody: true,
+    resizeToAvoidBottomInset: true,
+    appBar: AppBar(
+    title: Text("ToDo"),
+    ),
+
+
+      body: Form(
+        key: formKey1,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
+
           children: [
-            Text("Add New Task",
+            Text("Edit Task",
 
               style: GoogleFonts.poppins(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),
               textAlign: TextAlign.center,
@@ -38,9 +54,9 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
             TextFormField(
               validator:(value) {
                 if(value == null || value.isEmpty)
-                  {
-                    return"Please Enter Task Title";
-                  }
+                {
+                  return"Please Enter Task Title";
+                }
                 return null;
               },
               controller: titleController,
@@ -98,32 +114,38 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
               height: 10,
             ),
 
-            ElevatedButton(onPressed: (){
-                if(formKey.currentState!.validate())
-                  {
-                    TaskModel taskModel=TaskModel(title: titleController.text
-                        , description: descriptionController.text,
-                        date: DateUtils.dateOnly(selectedDate).microsecondsSinceEpoch);
-                    FirebaseFunctions.addTask(taskModel)
-                        .then((value){
-                      Navigator.pop(context);
-                    });
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(onPressed: (){
+                if(formKey1.currentState!.validate())
+                {
+                  TaskModel taskModel=TaskModel(id: args.id,isDone: args.isDone,title: titleController.text
+                      , description: descriptionController.text,
+                      date: DateUtils.dateOnly(selectedDate).microsecondsSinceEpoch);
+                  // print("============================================================\n");
+                  // print("${args.id}\n${args.title}\n${args.description}\n${args.date}\n${args.isDone}");
+                  FirebaseFunctions.updateTask(taskModel)
+                      .then((value){
+                    Navigator.pushNamed(context, HomeLayout.routeName);
+                  });
 
-                  }
+                }
 
 
-            },
-                child: Text("Add Task")
+              },
+                  child: Text("Save Changes")
 
+              ),
             )
           ],
         ),
       ),
+
     );
   }
 
   selectData()async{
- DateTime? chosenDate=  await showDatePicker(
+    DateTime? chosenDate=  await showDatePicker(
         context: context,
         initialDate:selectedDate,
         firstDate: DateTime.now(),
